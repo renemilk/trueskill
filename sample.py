@@ -19,38 +19,57 @@ import trueskill
 # nothing else.
 
 class Player(object):
-  pass
+	def __init__(self,name):
+		self.name = name
 
 # Create four players.  Assign each of them the default skill.  The
 # player ranking (their "level") is mu-3*sigma, so the default skill
 # value corresponds to a level of 0.
 
-alice = Player()
+alice = Player('alice')
 alice.skill = (25.0, 25.0/3.0)
 
-bob = Player()
+bob = Player('bob')
 bob.skill = (25.0, 25.0/3.0)
 
-chris = Player()
+chris = Player('chris')
 chris.skill = (25.0, 25.0/3.0)
 
-darren = Player()
+darren = Player('darren')
 darren.skill = (25.0, 25.0/3.0)
+
+players = [alice, bob, chris, darren]
 
 # The four players play a game.  Alice wins, Bob and Chris tie for
 # second, Darren comes in last.  The actual numerical values of the
 # ranks don't matter, they could be (1, 2, 2, 4) or (1, 2, 2, 3) or
 # (23, 45, 45, 67).  All that matters is that a smaller rank beats a
 # larger one, and equal ranks indicate draws.
+try:
+	import sys
+	iterations = int(sys.argv[1])
+except:
+	iterations = 1
+	
+with open('skills.csv','wb') as skilltable:
+	skilltable.write('iteration\t')
+	for p in players:
+		skilltable.write('%s_mu\t%s_sigma'%(p.name,p.name))
+	skilltable.write('\n')
+	
+	for i in range(iterations):
+		alice.rank = 1
+		bob.rank = 2
+		chris.rank = 2
+		darren.rank = 4
 
-alice.rank = 1
-bob.rank = 2
-chris.rank = 2
-darren.rank = 4
+		# Do the computation to find each player's new skill estimate.
 
-# Do the computation to find each player's new skill estimate.
-
-trueskill.AdjustPlayers([alice, bob, chris, darren])
+		trueskill.AdjustPlayers(players)
+		skilltable.write('%i\t'%i)
+		for p in players:
+			skilltable.write('%f\t%f'%p.skill)
+		skilltable.write('\n')
 
 # Print the results.
 
