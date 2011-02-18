@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
-import trueskill
+import trueskill,random
 
 # The output of this program should match the output of the TrueSkill
 # calculator at:
@@ -51,6 +51,7 @@ try:
 except:
 	iterations = 1
 	
+random.seed()
 with open('skills.csv','wb') as skilltable:
 	skilltable.write('#iteration\t')
 	for p in players:
@@ -58,10 +59,10 @@ with open('skills.csv','wb') as skilltable:
 	skilltable.write('\n')
 	
 	for i in range(iterations):
-		alice.rank = 1
-		bob.rank = 2
-		chris.rank = 2
-		darren.rank = 4
+		alice.rank = random.randint(0,4)
+		bob.rank = random.randint(0,4)
+		chris.rank = random.randint(0,4)
+		darren.rank = random.randint(0,4)
 
 		# Do the computation to find each player's new skill estimate.
 
