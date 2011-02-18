@@ -52,9 +52,9 @@ except:
 	iterations = 1
 	
 with open('skills.csv','wb') as skilltable:
-	skilltable.write('iteration\t')
+	skilltable.write('#iteration\t')
 	for p in players:
-		skilltable.write('%s_mu\t%s_sigma'%(p.name,p.name))
+		skilltable.write('%s_mu\t%s_sigma\t'%(p.name,p.name))
 	skilltable.write('\n')
 	
 	for i in range(iterations):
@@ -68,7 +68,7 @@ with open('skills.csv','wb') as skilltable:
 		trueskill.AdjustPlayers(players)
 		skilltable.write('%i\t'%i)
 		for p in players:
-			skilltable.write('%f\t%f'%p.skill)
+			skilltable.write('%f\t%f\t'%p.skill)
 		skilltable.write('\n')
 
 # Print the results.
