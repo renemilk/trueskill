@@ -1,5 +1,1 @@
-This is a simple Python implementation of the TrueSkill (TM) ranking
-system described here:
-
-   http://research.microsoft.com/en-us/projects/trueskill/
-
+use http://pypi.python.org/pypi/trueskill instead
